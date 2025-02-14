@@ -1,7 +1,3 @@
-using Carter;
-using Mapster;
-using MediatR;
-
 namespace Catalog.API.Features.CreateProduct;
 
 public record CreateProductRequest(
