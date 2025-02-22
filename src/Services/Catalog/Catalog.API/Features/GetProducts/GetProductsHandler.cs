@@ -1,8 +1,8 @@
 namespace Catalog.API.Features.GetProducts;
-public record GetProductsResult(IEnumerable<Product> ProductsResult);
+public record GetProductsResult(IEnumerable<Product> Products);
 public record GetProductsQuery : IQuery<GetProductsResult>;
 
-public class GetProductsQueryHandler(IDocumentSession session, ILogger<GetProductsQueryHandler> logger)
+internal class GetProductsQueryHandler(IDocumentSession session, ILogger<GetProductsQueryHandler> logger)
     : IRequestHandler<GetProductsQuery,GetProductsResult>
 {
     public async Task<GetProductsResult> Handle(GetProductsQuery query, CancellationToken cancellationToken)
