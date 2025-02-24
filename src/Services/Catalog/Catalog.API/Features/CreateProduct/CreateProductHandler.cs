@@ -8,10 +8,12 @@ public record CreateProductCommand(
     List<string> Category) : ICommand<CreateProductResult>;
 
 public record CreateProductResult(Guid Id);
-public class CreateProductCommandHandler(IDocumentSession session) : ICommandHandler<CreateProductCommand,CreateProductResult>
+public class CreateProductCommandHandler(IDocumentSession session, ILogger<CreateProductCommandHandler> logger) 
+    : ICommandHandler<CreateProductCommand,CreateProductResult>
 {
     public async Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
+        logger.LogInformation("Creating product with {command}", command);
         var product = new Product()
         {
             Name = command.Name,
