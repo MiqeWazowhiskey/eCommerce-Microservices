@@ -26,7 +26,7 @@ public class UpdateProductHandler(IDocumentSession session, ILogger<UpdateProduc
         var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
         if (product == null)
         {
-            throw new ProductNotFoundException();
+            throw new ProductNotFoundException(command.Id);
         }
         
         if (command.Name != null)

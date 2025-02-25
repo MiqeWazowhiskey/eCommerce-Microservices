@@ -1,3 +1,5 @@
+using BuildingBlocks.Exceptions;
+
 namespace Catalog.API.Features.GetProductByCategory;
 
 public record GetProductsByCategoryResult(IEnumerable<Product> Products);
@@ -13,7 +15,7 @@ public class GetProductsByCategoryHandler(IDocumentSession session, ILogger<GetP
         var products = await session.Query<Product>().Where(p => p.Category.Contains(query.Category)).ToListAsync();
         if (products is null)
         {
-            throw new ProductNotFoundException();
+            throw new NotFoundException("Products not found with related category.");
         }
         
         return new GetProductsByCategoryResult(products);

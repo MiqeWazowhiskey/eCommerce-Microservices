@@ -19,7 +19,7 @@ public class DeleteProductCommandHandler(IDocumentSession session, ILogger<Delet
         var product = await session.LoadAsync<Product>(command.Id, cancellationToken);
         if (product == null)
         {
-            throw new ProductNotFoundException();
+            throw new ProductNotFoundException(command.Id);
         }
         
         session.Delete<Product>(product.Id);
