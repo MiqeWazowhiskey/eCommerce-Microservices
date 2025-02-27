@@ -2,14 +2,15 @@ namespace Basket.API.Models;
 
 public class ShoppingCart
 {
-    public string UserName { get; set; } = string.Empty;
-    //User object must be here after authentication services
+    
+    // todo from session after auth services userId
+    public Guid UserId { get; set; } = Guid.Empty;
     public List<ShoppingCartItem> Items { get; set; } = [];
     public decimal TotalPrice => Items.Sum(i => i.Quantity * i.Price);
     
-    public ShoppingCart(string userName)
+    public ShoppingCart(Guid userId)
     {
-        UserName = userName;
+        UserId = userId;
     }
     
     //required to map
