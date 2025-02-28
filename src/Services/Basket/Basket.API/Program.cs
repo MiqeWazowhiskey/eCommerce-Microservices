@@ -19,6 +19,8 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
+builder.Services.AddScoped<IBasketRepository, IBasketRepository>();
+
 var app = builder.Build();
 
 app.MapCarter();

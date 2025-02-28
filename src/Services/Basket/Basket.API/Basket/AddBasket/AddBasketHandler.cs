@@ -1,5 +1,3 @@
-using Basket.API.Data;
-
 namespace Basket.API.Basket.AddBasket;
 
 public record AddBasketResult(bool IsSuccess, Guid UserId);
