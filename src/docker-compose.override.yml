@@ -52,6 +52,28 @@ services:
     volumes:
       - ${HOME}/.aspnet/https:/https:ro
       - ${HOME}/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+        
+  basket.api:
+    env_file:
+      - .env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - ASPNETCORE_HTTPS_PORTS=8081
+      - ASPNETCORE_URLS=http://+:8080;https://+:8081
+      - ConnectionStrings__Database=Server=basketdb;Port=5433;Database=BasketDb;User Id=${POSTGRES_UID};Password=${POSTGRES_PSW};Include Error Detail=true
+      - ConnectionStrings__Redis=distributedcache:6379
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PSW}
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+    depends_on:
+      - basketdb
+      - distributedcache
+    ports:
+      - "6001:8080"
+      - "6061:8081"
+    volumes:
+      - ${HOME}/.aspnet/https:/https:ro
+      - ${HOME}/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
 
 volumes:
   postgres_catalog:

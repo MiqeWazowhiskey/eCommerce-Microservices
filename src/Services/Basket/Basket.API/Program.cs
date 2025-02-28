@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
 using HealthChecks.UI.Client;
@@ -22,7 +23,7 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
-builder.Services.AddScoped<IBasketRepository, IBasketRepository>();
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
 
 builder.Services.AddStackExchangeRedisCache(opt =>
@@ -41,6 +42,16 @@ builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
     .AddRedis(builder.Configuration.GetConnectionString("Redis")!);
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ConfigureHttpsDefaults(https =>
+    {
+        https.ServerCertificate = new X509Certificate2(
+            "/https/aspnetapp.pfx",
+            Environment.GetEnvironmentVariable("CERT_PSW"));
+        
+    });
+});
 var app = builder.Build();
 app.UseExceptionHandler(opt => { });
 app.MapCarter();
