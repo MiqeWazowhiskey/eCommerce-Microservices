@@ -1,5 +1,6 @@
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
+using Microsoft.Extensions.Caching.Distributed;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
@@ -20,7 +21,21 @@ builder.Configuration
     .AddEnvironmentVariables();
 
 builder.Services.AddScoped<IBasketRepository, IBasketRepository>();
+builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
+
+builder.Services.AddStackExchangeRedisCache(opt =>
+{
+    opt.Configuration = builder.Configuration.GetConnectionString("Redis")!;
+    //opt.InstanceName = "Basket";
+});
+//builder.Services.AddScoped<IBasketRepository, IBasketRepository>(provider =>
+//{
+//    var basketRepository = provider.GetRequiredService<BasketRepository>();
+//    return new CachedBasketRepository(basketRepository, provider.GetRequiredService<IDistributedCache>());
+//});
+
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 app.UseExceptionHandler(opt => { });
 app.MapCarter();
