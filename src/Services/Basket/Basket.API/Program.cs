@@ -1,5 +1,5 @@
-using System.Reflection;
 using BuildingBlocks.Behaviors;
+using BuildingBlocks.Exceptions.Handler;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
@@ -20,8 +20,8 @@ builder.Configuration
     .AddEnvironmentVariables();
 
 builder.Services.AddScoped<IBasketRepository, IBasketRepository>();
-
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 var app = builder.Build();
-
+app.UseExceptionHandler(opt => { });
 app.MapCarter();
 app.Run();
