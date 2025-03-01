@@ -401,4 +401,7 @@ FodyWeavers.xsd
 .env
 **/https/
 
+.idea/*
+.idea/
+
 **/Migrations/
