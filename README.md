@@ -9,6 +9,15 @@ This project is a collection of microservices for an eCommerce platform, built u
 - **Catalog Service**: Stores and retrieves product data such as name, description, price, and availability.
 - **Order Service**: Processes orders, tracks the status of each order, and manages order data.
 
+
+### Design Patterns Used
+
+- **Repository Pattern**: Used in the Basket service to abstract data access logic from business logic. This separation allows for easier maintenance and testing of the data access layer while ensuring that each service manages its own data access independently.
+
+- **Decorator Pattern**: The **Cache Aside** pattern is implemented using the Decorator Pattern with Redis. It ensures that data is loaded into the cache when requested, and only fetched from the database if it’s not available in the cache. This improves performance by reducing the number of database queries for frequently accessed data.
+
+- **CQRS (Command Query Responsibility Segregation)**: General requests are handled using **Command** and **Query** objects. This pattern allows the separation of read and write operations, which improves scalability and performance by enabling independent optimization of query and command processing.
+
 ## Technologies Used
 
 - **AutoMapper**: Automates object-to-object mapping, simplifying data transformation across layers.
