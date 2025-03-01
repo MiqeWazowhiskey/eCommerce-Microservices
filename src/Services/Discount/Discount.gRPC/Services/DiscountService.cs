@@ -1,9 +1,11 @@
 using Discount.Grpc;
+using Discount.gRPC.Data;
 using Grpc.Core;
 
 namespace Discount.gRPC.Services;
 
-public class DiscountService : DiscountProtoService.DiscountProtoServiceBase
+public class DiscountService(DiscountContext context, ILogger<DiscountService> logger)
+    : DiscountProtoService.DiscountProtoServiceBase
 {
     public override Task<CouponModel> GetDiscount(GetDiscountRequest request, ServerCallContext context)
     {
