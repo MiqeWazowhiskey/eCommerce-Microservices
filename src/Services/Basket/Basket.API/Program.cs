@@ -1,9 +1,11 @@
 using System.Security.Cryptography.X509Certificates;
+using Basket.API.Services;
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Caching.Distributed;
+using Discount.Grpc;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
@@ -52,6 +54,15 @@ builder.WebHost.ConfigureKestrel(options =>
         
     });
 });
+
+// Add gRPC client configuration
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
+{
+    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+});
+
+builder.Services.AddScoped<GrpcDiscountService>();
+
 var app = builder.Build();
 app.UseExceptionHandler(opt => { });
 app.MapCarter();

@@ -31,6 +31,18 @@
       <PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="10.0.0-preview.1.25120.3" />
       <PackageReference Include="Scrutor" Version="6.0.1" />
       <PackageReference Include="StackExchange.Redis" Version="2.8.24" />
+      <PackageReference Include="Grpc.Tools" Version="2.60.0">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
+      <PackageReference Include="Google.Protobuf" Version="3.25.3" />
+      <PackageReference Include="Grpc.Net.ClientFactory" Version="2.60.0" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Protobuf Include="..\..\Discount\Discount.gRPC\Protos\discount.proto" GrpcServices="Client">
+        <Link>Protos\discount.proto</Link>
+      </Protobuf>
     </ItemGroup>
 
 </Project>
