@@ -34,17 +34,6 @@ This project is a collection of microservices for an eCommerce platform, built u
 - **Mapster**: Automates mapping, simplifying data transformation across layers.
 - **FluentValidation**: Validates incoming requests to ensure data integrity before processing.
 
-## Project Structure
-
-- **Basket Service**: Manages the user's shopping basket.
-- **Discount Service**: Calculates and applies discounts based on basket data.
-- **Catalog Service**: Provides product information.
-- **Order Service**: Manages order creation and tracking.
-
-## gRPC Communication
-
-Services communicate synchronously using gRPC. Communication is defined by the `.proto` files located in the `Proto` folder. These files define the message formats and services available for inter-service communication.
-
 [Tutorial I followed](https://www.udemy.com/course/microservices-architecture-and-implementation-on-dotnet/)
 
 ## TODO
