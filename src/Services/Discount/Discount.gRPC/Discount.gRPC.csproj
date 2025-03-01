@@ -9,6 +9,10 @@
 
     <ItemGroup>
         <PackageReference Include="Grpc.AspNetCore" Version="2.57.0"/>
+        <PackageReference Include="Grpc.Tools" Version="2.70.0">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.2" />
     </ItemGroup>
 
@@ -16,6 +20,11 @@
       <Content Include="..\..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Protos\discount.proto" />
+      <Protobuf Include="Protos\discount.proto" GrpcServices="Server" />
     </ItemGroup>
 
 </Project>
