@@ -58,11 +58,6 @@ builder.WebHost.ConfigureKestrel(options =>
     });
 });
 
-// Add gRPC client configuration
-builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
-{
-    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
-});
 
 builder.Services.AddScoped<GrpcDiscountService>();
 
