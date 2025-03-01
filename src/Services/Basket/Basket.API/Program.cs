@@ -1,11 +1,11 @@
 using System.Security.Cryptography.X509Certificates;
-using Basket.API.Services;
 using BuildingBlocks.Behaviors;
 using BuildingBlocks.Exceptions.Handler;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Caching.Distributed;
 using Discount.Grpc;
+using Discount.gRPC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 var assembly = typeof(Program).Assembly;
@@ -39,9 +39,14 @@ builder.Services.AddStackExchangeRedisCache(opt =>
 //    return new CachedBasketRepository(basketRepository, provider.GetRequiredService<IDistributedCache>());
 //});
 builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opt =>
-{
-    opt.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
-});
+    {
+        opt.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+    })
+    .ConfigurePrimaryHttpMessageHandler(() => new HttpClientHandler()
+    {
+        ServerCertificateCustomValidationCallback =
+            HttpClientHandler.DangerousAcceptAnyServerCertificateValidator
+    });
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("Database")!)
@@ -59,7 +64,7 @@ builder.WebHost.ConfigureKestrel(options =>
 });
 
 
-builder.Services.AddScoped<GrpcDiscountService>();
+builder.Services.AddScoped<DiscountService>();
 
 var app = builder.Build();
 app.UseExceptionHandler(opt => { });
