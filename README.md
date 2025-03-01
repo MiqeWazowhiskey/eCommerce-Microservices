@@ -18,18 +18,21 @@ This project is a collection of microservices for an eCommerce platform, built u
 
 - **CQRS (Command Query Responsibility Segregation)**: General requests are handled using **Command** and **Query** objects. This pattern allows the separation of read and write operations, which improves scalability and performance by enabling independent optimization of query and command processing.
 
+- **DDD (Domain-Driven Design)**: The **Ordering Service** will follow Domain-Driven Design principles to model the domain and encapsulate business logic into domain entities, value objects, and aggregates. It will utilize rich domain models to manage business complexity effectively.
+
+- **Clean Architecture**: The **Ordering Service** will follow Clean Architecture principles, organizing code into separate layers. This architecture promotes maintainability and testability by ensuring that each layer has a single responsibility and is decoupled from the others.
+
 ## Technologies Used
 
-- **AutoMapper**: Automates object-to-object mapping, simplifying data transformation across layers.
-- **FluentValidation**: Validates incoming requests to ensure data integrity before processing.
-- **Carter**: A minimalistic API framework used to build fast and simple REST APIs.
-- **Marten**: A document database for efficient data storage and retrieval.
 - **Redis**: In-memory cache to improve performance by storing frequently accessed data.
 - **Scrutor**: Facilitates clean service registration by scanning assemblies and adding services to the container.
 - **gRPC**: Provides high-performance, low-latency communication between services for synchronous communication.
-- **Proto Files**: Defines the data structures and gRPC services for communication between microservices.
 - **SQLite** & **PostgreSQL**: Used for database management (SQLite for local development and PostgreSQL for production).
 - **EntityFramework Core**: Simplifies object-relational mapping (ORM) for interactions with databases.
+- **Carter**: A minimalistic API framework used to build fast and simple REST APIs.
+- **Marten**: A document database for efficient data storage and retrieval.
+- **Mapster**: Automates mapping, simplifying data transformation across layers.
+- **FluentValidation**: Validates incoming requests to ensure data integrity before processing.
 
 ## Project Structure
 
@@ -41,6 +44,8 @@ This project is a collection of microservices for an eCommerce platform, built u
 ## gRPC Communication
 
 Services communicate synchronously using gRPC. Communication is defined by the `.proto` files located in the `Proto` folder. These files define the message formats and services available for inter-service communication.
+
+[Tutorial I followed](https://www.udemy.com/course/microservices-architecture-and-implementation-on-dotnet/)
 
 ## TODO
 
